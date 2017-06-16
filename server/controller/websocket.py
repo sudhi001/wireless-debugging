@@ -53,15 +53,9 @@ def handle_websocket():
 
     # If we have the API key, we can waste a little less time searching for the
     # WebSocket.
-<<<<<<< HEAD
-    ws_api_key = _websocket_metadata.get('apiKey', '')
+    ws_api_key = websocket_metadata.get('apiKey', '')
     if (ws_api_key and ws_api_key in _web_ui_ws_connections and
             websocket in _web_ui_ws_connections[ws_api_key]):
-=======
-    ws_api_key = websocket_metadata.get('apiKey', '')
-    if (ws_api_key and ws_api_key in _web_ui_ws_connections and websocket in
-            _web_ui_ws_connections[ws_api_key]):
->>>>>>> code cleanup
         _web_ui_ws_connections[ws_api_key].remove(websocket)
     # ... Otherwise we have to search everywhere to find and delete it.
     else:
@@ -109,8 +103,7 @@ def log_dump(message, websocket, metadata):
         metadata: the metadata object for the WebSocket connection
     """
     log_entries = list(
-        LogParser.parse(message['rawLogData'], metadata['osType'])
-    )
+        LogParser.parse(message['rawLogData'], metadata['osType']))
 
     api_key = metadata.get('apiKey', '')
 
@@ -126,15 +119,7 @@ def log_dump(message, websocket, metadata):
         'logEntries': LogParser.convert_to_html(log_entries),
     }
 
-<<<<<<< HEAD
     for connection in _get_associated_websockets(api_key):
-=======
-    # Determine wich WebSocket connections to send the logs to
-    associated_websockets = controller.user_management_interface \
-        .find_associated_websockets(api_key, _web_ui_ws_connections)
-
-    for connection in associated_websockets:
->>>>>>> code cleanup
         connection.send(util.serialize_to_json(send_logs))
 
 
@@ -179,15 +164,7 @@ def device_metrics(message, websocket, metadata):
         message: the device metrics in a JSON object
         websocket: the full websocket connection
     """
-<<<<<<< HEAD
     for connection in _get_associated_websockets(metadata.get('apiKey', '')):
-=======
-    api_key = metadata['apiKey']
-    associated_websockets = controller.user_management_interface \
-        .find_associated_websockets(api_key, _web_ui_ws_connections)
-
-    for connection in associated_websockets:
->>>>>>> code cleanup
         connection.send(util.serialize_to_json(message))
 
 
