@@ -11,7 +11,7 @@ matrix:
         - docker run -dp 27017:27017 mongo:3.4.4
         - cd server
       script:
-        - pytest -vv
+        - pytest -vv --cov=./
 
     - language: node_js
       node_js:
@@ -23,5 +23,6 @@ matrix:
         - npm install
       script:
         - istanbul cover --hook-run-in-context --dir public/js/coverage ./node_modules/mocha/bin/_mocha -- js/test
-      after_script:
-        - codecov
+
+after_script:
+  - codecov
